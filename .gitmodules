@@ -1,0 +1,3 @@
+[submodule "gameServer"]
+	path = gameServer
+	url = https://github.com/ajoskows/21GameServer.git
