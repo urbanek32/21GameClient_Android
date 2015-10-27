@@ -278,6 +278,9 @@ public class LoginActivity extends Activity {
                 Toast.makeText(getBaseContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
                 showProgress(false);
                 userLoginTask = null;
+
+                Intent intent = new Intent(context, LobbyActivity.class);
+                startActivityForResult(intent, 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -342,7 +345,7 @@ public class LoginActivity extends Activity {
                 Toast.makeText(getBaseContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
                 //view.setText(result);
 
-                Intent intent = new Intent(context, GameActivity.class);
+                Intent intent = new Intent(context, LobbyActivity.class);
                 startActivityForResult(intent, 1);
 
             } catch (JSONException e) {
