@@ -106,6 +106,10 @@ public class LoginActivity extends Activity {
 
     }
 
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
     private void attemptLogin() {
 
         if(userLoginTask != null) {
@@ -283,14 +287,18 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(String result) {
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                Toast.makeText(getBaseContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                showToast( jsonObject.getString("message") );
                 showProgress(false);
                 userLoginTask = null;
 
                 Intent intent = new Intent(context, LobbyActivity.class);
                 intent.putExtra("playerName", userName);
                 startActivityForResult(intent, 1);
+
             } catch (JSONException e) {
+                showProgress(false);
+                userLoginTask = null;
+                showToast(e.getMessage());
                 e.printStackTrace();
             }
 

@@ -12,8 +12,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
@@ -29,7 +31,10 @@ public class LobbyActivity extends AppCompatActivity {
 
     private Context lobbyContext;
     private final OkHttpClient httpClient = new OkHttpClient();
+
     private HttpAsyncGetLobbiesTask getLobbiesTask = null;
+    private HttpAsyncJoinToLobbyTask joinLobbyTask = null;
+
     private String userName = "";
 
     private ProgressBar progressView;
@@ -78,14 +83,26 @@ public class LobbyActivity extends AppCompatActivity {
         getLobbies();
     }
 
-    public void joinToLobby(String lobbyName) {
-        showToast(lobbyName);
+    public void joinToLobby(String lobbyName, String lobbyOwner) {
+        if(joinLobbyTask != null) return;
+
+        if(lobbyOwner.equals(userName)) {
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra("playerName", userName);
+            startActivity(intent);
+            return;
+        }
+
+        joinLobbyTask = new HttpAsyncJoinToLobbyTask(lobbyContext);
+        joinLobbyTask.execute("http://java21.endrius.tk/addNewAssignment",
+                lobbyName,
+                userName);
     }
 
     public void createNewLobby() {
         Intent intent = new Intent(this, CreateNewLobbyActivity.class);
         intent.putExtra("playerName", userName);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     private void showToast(String message) {
@@ -122,14 +139,25 @@ public class LobbyActivity extends AppCompatActivity {
                         lobby.getInt("maxMembersCount"))
                 );
             }
-            lobbyListView.deferNotifyDataSetChanged();
+
+            LobbyAdapter adapter = new LobbyAdapter(this, listOfLobbies);
+            lobbyListView.setAdapter(adapter);
+
             showProgress(false);
             getLobbiesTask = null;
 
         } catch (JSONException e) {
+            showProgress(false);
+            showToast(e.getMessage());
             e.printStackTrace();
         }
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        showToast("Refreshing lobbies...");
+        getLobbies();
+    }
+
 
 
 
@@ -173,6 +201,80 @@ public class LobbyActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             parseLobbiesResponse(result);
+
+        }
+    }
+
+    private String JoinToLobbyJSON(String roomName, String nickname) {
+        return String.format("{ \"roomName\": \"%s\", \"nickname\": \"%s\" }", roomName, nickname);
+    }
+
+    private String JoinToLobbyPOST(String... params)
+    {
+        try {
+            MediaType JSON = MediaType.parse("application/JSON; charset=utf-8");
+            RequestBody formBody = RequestBody.create(JSON, JoinToLobbyJSON(params[1], params[2]));
+
+            Request request = new Request.Builder()
+                    .url(params[0])
+                    .post(formBody)
+                    .build();
+
+            Response response = httpClient.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            return response.body().string();
+        }
+        catch(IOException e) {
+            showToast(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    public class HttpAsyncJoinToLobbyTask  extends AsyncTask<String, Void, String> {
+        private Context context;
+
+        public HttpAsyncJoinToLobbyTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            showProgress(true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            return JoinToLobbyPOST(params);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                int responseCode = jsonObject.getInt("code");
+                String message = jsonObject.getString("message");
+
+                showProgress(false);
+                joinLobbyTask = null;
+
+                if(responseCode == 500) {
+                    showToast(message);
+                } else if(responseCode == 201) {
+                    showToast(message);
+
+                    Intent intent = new Intent(context, GameActivity.class);
+                    intent.putExtra("playerName", userName);
+                    startActivity(intent);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
     }

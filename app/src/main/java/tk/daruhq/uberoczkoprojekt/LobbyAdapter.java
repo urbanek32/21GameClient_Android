@@ -69,6 +69,6 @@ public class LobbyAdapter extends BaseAdapter implements OnClickListener {
     @Override
     public void onClick(View v) {
         LobbyViewModel entry = (LobbyViewModel) v.getTag();
-        ((LobbyActivity) context).joinToLobby(entry.getName());
+        ((LobbyActivity) context).joinToLobby(entry.getName(), entry.getOwnerNickname());
     }
 }

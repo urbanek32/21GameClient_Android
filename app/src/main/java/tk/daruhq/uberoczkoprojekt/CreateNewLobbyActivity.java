@@ -37,6 +37,7 @@ public class CreateNewLobbyActivity extends AppCompatActivity {
     private Button createLobbyButton;
 
     private HttpAsyncCreateNewLobbyTask createNewLobbyTask = null;
+    private HttpAsyncJoinToLobbyTask joinToLobbyTask = null;
 
     private String userName = "";
 
@@ -105,7 +106,6 @@ public class CreateNewLobbyActivity extends AppCompatActivity {
         if(cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            showProgress(false);
             focusView.requestFocus();
             return;
         }
@@ -199,12 +199,94 @@ public class CreateNewLobbyActivity extends AppCompatActivity {
                     showToast(message);
                 } else if(responseCode == 201) {
                     showToast(message);
-                    showToast("Graj");
+
+                    joinToLobbyTask = new HttpAsyncJoinToLobbyTask(context);
+                    joinToLobbyTask.execute("http://java21.endrius.tk/addNewAssignment",
+                            lobbyNameView.getText().toString(),
+                            userName);
                 }
 
                 /*Intent intent = new Intent(context, LobbyActivity.class);
                 intent.putExtra("playerName", userName);
                 startActivityForResult(intent, 1);*/
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    private String JoinToLobbyJSON(String roomName, String nickname) {
+        return String.format("{ \"roomName\": \"%s\", \"nickname\": \"%s\" }", roomName, nickname);
+    }
+
+    private String JoinToLobbyPOST(String... params)
+    {
+        try {
+            MediaType JSON = MediaType.parse("application/JSON; charset=utf-8");
+            RequestBody formBody = RequestBody.create(JSON, JoinToLobbyJSON(params[1], params[2]));
+
+            Request request = new Request.Builder()
+                    .url(params[0])
+                    .post(formBody)
+                    .build();
+
+            Response response = httpClient.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            return response.body().string();
+        }
+        catch(IOException e) {
+            showToast(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    public class HttpAsyncJoinToLobbyTask  extends AsyncTask<String, Void, String> {
+        private Context context;
+
+        public HttpAsyncJoinToLobbyTask(Context context){
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            showProgress(true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            return JoinToLobbyPOST(params);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                int responseCode = jsonObject.getInt("code");
+                String message = jsonObject.getString("message");
+
+                showProgress(false);
+                joinToLobbyTask = null;
+
+                if(responseCode == 500) {
+                    showToast(message);
+
+                    /*Intent intent = new Intent(context, LobbyActivity.class);
+                    startActivity(intent);*/
+                    Intent intent = new Intent();
+                    setResult(0, intent);
+                    finish();
+
+                } else if(responseCode == 201) {
+                    showToast(message);
+                    showToast("Graj");
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

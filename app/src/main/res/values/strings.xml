@@ -16,6 +16,6 @@
     <string name="error_maxPlayers_invalid">Numbers of players is invalid</string>
 
 
-    <string name="header_login_form">Hello\nPlease log in</string>
+    <string name="header_login_form">Witaj\nProszę zaloguj się</string>
     <string name="title_activity_game">GameActivity</string>
 </resources>
