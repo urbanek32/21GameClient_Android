@@ -114,14 +114,22 @@ public class GameActivity extends AppCompatActivity {
         };
     }*/
 
-    private void checkGameState() {
+    private void checkGameState(String getCard) {
         if(getCardTask != null) return;
 
-
+        getCardTask = new HttpAsyncGetCardTask(gameContext);
+        getCardTask.execute("http://java21.endrius.tk/nextCard",
+                userName,
+                getCard);
     }
 
     private void processGameStateResponse(String response) {
+        try {
+            JSONObject obj = new JSONObject(response);
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showToast(String message) {
@@ -241,7 +249,8 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            // write show progress Dialog code here
+            showProgress(true);
+
             super.onPreExecute();
         }
 
@@ -252,9 +261,9 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            processGameStateResponse(result);
 
-            //parseLobbiesResponse(result);
-
+            showProgress(false);
         }
     }
 }

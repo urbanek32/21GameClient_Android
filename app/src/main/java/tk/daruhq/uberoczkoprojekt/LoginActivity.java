@@ -244,8 +244,8 @@ public class LoginActivity extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == 2){
-            Toast.makeText(getBaseContext(), data.getExtras().get("siema").toString(), Toast.LENGTH_LONG).show();
+        if(resultCode == 1){
+            Toast.makeText(getBaseContext(), "ole", Toast.LENGTH_LONG).show();
         }
 
 
@@ -287,13 +287,13 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(String result) {
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                showToast( jsonObject.getString("message") );
-                showProgress(false);
+                showToast(jsonObject.getString("message"));
                 userLoginTask = null;
 
                 Intent intent = new Intent(context, LobbyActivity.class);
                 intent.putExtra("playerName", userName);
                 startActivityForResult(intent, 1);
+                showProgress(false);
 
             } catch (JSONException e) {
                 showProgress(false);

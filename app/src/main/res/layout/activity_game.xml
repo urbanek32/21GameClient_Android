@@ -34,7 +34,8 @@
         android:text="New Text"
         android:id="@+id/player1Box"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +43,8 @@
         android:text="New Text"
         android:id="@+id/player1Score"
         android:layout_below="@+id/player1Box"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +52,8 @@
         android:text="New Text"
         android:id="@+id/player2Box"
         android:layout_above="@+id/player1Score"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +69,8 @@
         android:text="New Text"
         android:id="@+id/player3Box"
         android:layout_above="@+id/player2Score"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -74,7 +78,8 @@
         android:text="New Text"
         android:id="@+id/player3Score"
         android:layout_below="@+id/player3Box"
-        android:layout_alignStart="@+id/player3Box" />
+        android:layout_alignStart="@+id/player3Box"
+        android:gravity="center_vertical|center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
@@ -91,7 +96,8 @@
         android:id="@+id/mainPlayerBox"
         android:layout_marginTop="79dp"
         android:layout_below="@+id/player2Score"
-        android:layout_alignStart="@+id/player2Score" />
+        android:layout_alignStart="@+id/player2Score"
+        android:gravity="center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,7 +105,8 @@
         android:text="New Text"
         android:id="@+id/mainPlayerScore"
         android:layout_below="@+id/mainPlayerBox"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical|center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
@@ -109,5 +116,37 @@
         android:layout_above="@+id/readyButton"
         android:layout_alignEnd="@+id/readyButton"
         android:layout_alignStart="@+id/drawCardButton" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignStart="@+id/progressBar"
+        android:layout_below="@+id/mainPlayerScore"
+        android:layout_above="@+id/drawCardButton">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView1"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/card_2" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView2"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/card_11" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView3"
+            android:layout_weight="1"
+            android:src="@mipmap/card_12" />
+    </LinearLayout>
 
 </RelativeLayout>
