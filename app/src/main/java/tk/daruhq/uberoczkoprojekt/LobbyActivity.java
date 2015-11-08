@@ -1,6 +1,7 @@
 package tk.daruhq.uberoczkoprojekt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,12 +23,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class LobbyActivity extends AppCompatActivity {
 
     private Context lobbyContext;
     private final OkHttpClient httpClient = new OkHttpClient();
     private HttpAsyncGetLobbiesTask getLobbiesTask = null;
+    private String userName = "";
 
     private ProgressBar progressView;
     private ListView lobbyListView;
@@ -42,22 +45,14 @@ public class LobbyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lobby);
 
         lobbyContext = this;
+        httpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        httpClient.setReadTimeout(10, TimeUnit.SECONDS);
+        httpClient.setWriteTimeout(10, TimeUnit.SECONDS);
 
         lobbyListView = (ListView) findViewById(R.id.lobbyListView);
         lobbyListView.setClickable(false);
 
-        /*listOfLobbies.add(new LobbyViewModel(1, "mojeLoby", "seba", 4));
-        listOfLobbies.add(new LobbyViewModel(2, "twoje Loby", "elo", 2));
-        listOfLobbies.add(new LobbyViewModel(4, "moje Lobyyyyy", "ja", 4));
-        listOfLobbies.add(new LobbyViewModel(3, "moje Lol", "ona", 4));
-        listOfLobbies.add(new LobbyViewModel(1, "mojeLoby", "seba", 4));
-        listOfLobbies.add(new LobbyViewModel(2, "twoje Loby", "elo", 2));
-        listOfLobbies.add(new LobbyViewModel(4, "moje Lobyyyyy", "ja", 4));
-        listOfLobbies.add(new LobbyViewModel(3, "moje Lol", "ona", 4));
-        listOfLobbies.add(new LobbyViewModel(1, "mojeLoby", "seba", 4));
-        listOfLobbies.add(new LobbyViewModel(2, "twoje Loby", "elo", 2));
-        listOfLobbies.add(new LobbyViewModel(4, "moje Lobyyyyy", "ja", 4));
-        listOfLobbies.add(new LobbyViewModel(3, "moje Lol", "ona", 4));*/
+        userName = getIntent().getExtras().get("playerName").toString();
 
         LobbyAdapter adapter = new LobbyAdapter(this, listOfLobbies);
         lobbyListView.setAdapter(adapter);
@@ -65,6 +60,12 @@ public class LobbyActivity extends AppCompatActivity {
         progressView = (ProgressBar)findViewById(R.id.lobbiesProgressBar);
 
         createLobbyButton = (Button)findViewById(R.id.createLobbyButton);
+        createLobbyButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewLobby();
+            }
+        });
 
         refreshButton = (Button)findViewById(R.id.refreshLobby);
         refreshButton.setOnClickListener(new OnClickListener() {
@@ -74,10 +75,17 @@ public class LobbyActivity extends AppCompatActivity {
             }
         });
 
+        getLobbies();
     }
 
     public void joinToLobby(String lobbyName) {
         showToast(lobbyName);
+    }
+
+    public void createNewLobby() {
+        Intent intent = new Intent(this, CreateNewLobbyActivity.class);
+        intent.putExtra("playerName", userName);
+        startActivity(intent);
     }
 
     private void showToast(String message) {
@@ -103,6 +111,7 @@ public class LobbyActivity extends AppCompatActivity {
         try {
             JSONObject obj = new JSONObject(response);
             JSONArray lobbiesArray = obj.getJSONArray("body");
+            listOfLobbies.clear();
 
             for(int i = 0; i < lobbiesArray.length(); i++) {
                 JSONObject lobby = lobbiesArray.getJSONObject(i);
@@ -113,7 +122,7 @@ public class LobbyActivity extends AppCompatActivity {
                         lobby.getInt("maxMembersCount"))
                 );
             }
-
+            lobbyListView.deferNotifyDataSetChanged();
             showProgress(false);
             getLobbiesTask = null;
 
@@ -121,6 +130,8 @@ public class LobbyActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 
     private String GET(String... params) {
         try {

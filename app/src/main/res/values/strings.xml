@@ -3,13 +3,17 @@
     
     <!-- Strings related to login -->
     <string name="prompt_nickname">Nickname</string>
+    <string name="prompt_nameOfLobby">Name of lobby</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_maxPlayers">Max players</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_nickname">This nickname is too short</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_user_exists">This user already exists</string>
+    <string name="error_lobbyName_invalid">Lobby name is invalid</string>
+    <string name="error_maxPlayers_invalid">Numbers of players is invalid</string>
 
 
     <string name="header_login_form">Hello\nPlease log in</string>

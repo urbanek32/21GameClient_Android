@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="tk.daruhq.uberoczkoprojekt.CreateNewLobbyActivity">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/progressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lobbyNameBox"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/maxPlayersBox"
+        android:hint="@string/prompt_nameOfLobby" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/maxPlayersBox"
+        android:layout_below="@+id/lobbyNameBox"
+        android:layout_toEndOf="@+id/progressBar"
+        android:hint="@string/prompt_maxPlayers" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create new lobby"
+        android:id="@+id/createLobbyButton"
+        android:layout_below="@+id/maxPlayersBox"
+        android:layout_alignEnd="@+id/maxPlayersBox"
+        android:layout_toEndOf="@+id/progressBar" />
+
+</RelativeLayout>

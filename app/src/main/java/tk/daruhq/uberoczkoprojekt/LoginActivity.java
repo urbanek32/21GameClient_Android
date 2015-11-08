@@ -46,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 public class LoginActivity extends Activity {
@@ -61,6 +62,8 @@ public class LoginActivity extends Activity {
     private final OkHttpClient httpClient = new OkHttpClient();
     private HttpAsyncLoginTask userLoginTask = null;
 
+    private String userName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,10 @@ public class LoginActivity extends Activity {
         passwordView = (EditText) findViewById(R.id.password);
         progressView = findViewById(R.id.login_progress);
         loginFormView = findViewById(R.id.login_form);
+
+        httpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        httpClient.setReadTimeout(10, TimeUnit.SECONDS);
+        httpClient.setWriteTimeout(10, TimeUnit.SECONDS);
 
         /*Button myPostButton = (Button)findViewById(R.id.postButton);
         myPostButton.setOnClickListener(new OnClickListener() {
@@ -147,6 +154,7 @@ public class LoginActivity extends Activity {
             return;
         }
 
+        userName = nickname;
         showProgress(true);
         userLoginTask = new HttpAsyncLoginTask(loginContext);
         userLoginTask.execute(
@@ -280,6 +288,7 @@ public class LoginActivity extends Activity {
                 userLoginTask = null;
 
                 Intent intent = new Intent(context, LobbyActivity.class);
+                intent.putExtra("playerName", userName);
                 startActivityForResult(intent, 1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -346,6 +355,7 @@ public class LoginActivity extends Activity {
                 //view.setText(result);
 
                 Intent intent = new Intent(context, LobbyActivity.class);
+                intent.putExtra("playerName", userName);
                 startActivityForResult(intent, 1);
 
             } catch (JSONException e) {
