@@ -12,7 +12,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Join"
+            android:text="@string/button_lobbyList_join"
             android:id="@+id/joinLobby"
             android:layout_column="0" />
 

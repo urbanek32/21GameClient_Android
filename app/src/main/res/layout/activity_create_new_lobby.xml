@@ -37,7 +37,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create new lobby"
+        android:text="@string/button_createlobby_create"
         android:id="@+id/createLobbyButton"
         android:layout_below="@+id/maxPlayersBox"
         android:layout_alignEnd="@+id/maxPlayersBox"

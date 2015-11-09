@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lista pokojów"
+        android:text="@string/lobby_listOfLobbies"
         android:id="@+id/headerOfLobbies"
         android:gravity="center_horizontal" />
 
@@ -32,7 +32,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create lobby"
+        android:text="@string/button_lobby_create"
         android:id="@+id/createLobbyButton"
         android:layout_gravity="right"
         android:layout_alignParentBottom="true"
@@ -41,7 +41,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Refresh"
+        android:text="@string/button_lobby_refresh"
         android:id="@+id/refreshLobby"
         android:layout_gravity="center"
         android:layout_alignParentBottom="true"

@@ -1,19 +1,25 @@
 <resources>
-    <string name="app_name">UberOczkoProjekt</string>
-    
-    <!-- Strings related to login -->
-    <string name="prompt_nickname">Nickname</string>
-    <string name="prompt_nameOfLobby">Name of lobby</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_maxPlayers">Max players</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_nickname">This nickname is too short</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="error_user_exists">This user already exists</string>
-    <string name="error_lobbyName_invalid">Lobby name is invalid</string>
-    <string name="error_maxPlayers_invalid">Numbers of players is invalid</string>
+    <string name="app_name">Uber Oczko Projekt</string>
+
+    <string name="prompt_nickname">Nick</string>
+    <string name="prompt_nameOfLobby">Nazwa lobby</string>
+    <string name="prompt_password">Hasło</string>
+    <string name="prompt_maxPlayers">Maksymalna ilość graczy</string>
+    <string name="action_sign_in">Zaloguj się lub zarejestruj</string>
+    <string name="error_invalid_nickname">Nick jest zbyt krótki</string>
+    <string name="error_invalid_password">Hasło jest zbyt krótkiet</string>
+    <string name="error_field_required">Pole wymagane</string>
+    <string name="error_user_exists">Taki użytkownik już istnieje</string>
+    <string name="error_lobbyName_invalid">Nazwa lobby jest nieprawidłowa</string>
+    <string name="error_maxPlayers_invalid">Maksymalna ilość graczy jest nieprawidłowa</string>
+    <string name="button_lobby_refresh">Odśwież</string>
+    <string name="button_lobby_create">Stwórz nowe</string>
+    <string name="lobby_listOfLobbies">Lista pokojów</string>
+    <string name="button_createlobby_create">Stwórz nowe lobby</string>
+    <string name="button_lobbyList_join">Dołącz</string>
+    <string name="button_game_drawCard">Weź kartę</string>
+    <string name="button_game_stopCard">Pass</string>
+    <string name="button_game_setReady">Zmień gotowość</string>
 
 
     <string name="header_login_form">Witaj\nProszę zaloguj się</string>

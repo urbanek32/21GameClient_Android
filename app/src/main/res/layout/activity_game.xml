@@ -21,7 +21,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SET ready"
+        android:text="@string/button_game_setReady"
         android:id="@+id/readyButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Player 1"
         android:id="@+id/player1Box"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Wynik: 15"
         android:id="@+id/player1Score"
         android:layout_below="@+id/player1Box"
         android:layout_alignParentStart="true"
@@ -49,7 +49,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Player 2"
         android:id="@+id/player2Box"
         android:layout_above="@+id/player1Score"
         android:layout_centerHorizontal="true"
@@ -58,7 +58,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Wynik: 10"
         android:id="@+id/player2Score"
         android:layout_below="@+id/player2Box"
         android:layout_alignStart="@+id/player2Box" />
@@ -66,7 +66,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Player 3"
         android:id="@+id/player3Box"
         android:layout_above="@+id/player2Score"
         android:layout_alignParentEnd="true"
@@ -75,19 +75,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Wynik: 22"
         android:id="@+id/player3Score"
-        android:layout_below="@+id/player3Box"
-        android:layout_alignStart="@+id/player3Box"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_above="@+id/mainPlayerBox"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="draw card"
+        android:text="@string/button_game_drawCard"
         android:id="@+id/drawCardButton"
         android:layout_above="@+id/noMoreButton"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/mainPlayerScore"
+        android:layout_alignStart="@+id/player2Score" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -95,23 +97,23 @@
         android:text="New Text"
         android:id="@+id/mainPlayerBox"
         android:layout_marginTop="79dp"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_below="@+id/player2Score"
-        android:layout_alignStart="@+id/player2Score"
-        android:gravity="center_vertical|center_horizontal" />
+        android:layout_alignEnd="@+id/player2Box" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/mainPlayerScore"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_below="@+id/mainPlayerBox"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_vertical|center_horizontal" />
+        android:layout_alignStart="@+id/mainPlayerBox" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No more"
+        android:text="@string/button_game_stopCard"
         android:id="@+id/noMoreButton"
         android:layout_above="@+id/readyButton"
         android:layout_alignEnd="@+id/readyButton"

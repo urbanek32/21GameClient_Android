@@ -83,7 +83,7 @@ public class GameActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         userName = getIntent().getExtras().get("playerName").toString();
         mainPlayerBox.setText(userName);
-        mainPlayerScore.setText("0");
+        mainPlayerScore.setText("Wynik: 0");
     }
 
     @Override
